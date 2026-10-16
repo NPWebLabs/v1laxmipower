@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Laxmi Power"><g transform="translate(0,0) scale(1)">
+<path d="M50 82 C34 80 14 72 4 56 C20 52 38 60 50 82Z" fill="#1B2140"/>
+<path d="M50 82 C66 80 86 72 96 56 C80 52 62 60 50 82Z" fill="#1B2140"/>
+<path d="M50 82 C36 72 22 52 22 26 C40 36 50 56 50 82Z" fill="#36407A"/>
+<path d="M50 82 C64 72 78 52 78 26 C60 36 50 56 50 82Z" fill="#36407A"/>
+<path fill-rule="evenodd" fill="#F2A23A" d="M50 6 C62 22 66 40 66 54 C66 68 58 78 50 84 C42 78 34 68 34 54 C34 40 38 22 50 6Z M54 20 L40 52 L49 52 L45 72 L61 40 L52 40 L56 20Z"/>
+<rect x="24" y="88" width="52" height="5" rx="2.5" fill="#1B2140"/>
+</g></svg>
