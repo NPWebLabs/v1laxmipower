@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url'
 import { adminEmail, userEmail } from './templates.js'
 import { NEEDS } from '../src/needs.js'
 
-const LOG = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'enquiries.jsonl')
+// On Vercel the project folder is read-only, so the backup copy goes to /tmp (temporary — check Vercel's function logs instead).
+const LOG = process.env.VERCEL ? '/tmp/enquiries.jsonl' : path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'enquiries.jsonl')
 
 // Basic per-IP limit: 5 submissions / 10 minutes.
 const hits = new Map()
