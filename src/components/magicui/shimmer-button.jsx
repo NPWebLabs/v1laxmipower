@@ -5,7 +5,7 @@ export const ShimmerButton = forwardRef(function ShimmerButton(
   return (
     <Tag ref={ref}
       style={{ '--spread': '90deg', '--shimmer-color': shimmerColor, '--radius': borderRadius, '--speed': shimmerDuration, '--cut': shimmerSize, '--bg': background }}
-      className={cn('group relative z-0 inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2 overflow-hidden whitespace-nowrap border border-white/20 px-6 py-3 font-semibold text-[#141A33] [background:var(--bg)] [border-radius:var(--radius)]',
+      className={cn('group relative z-0 inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2 overflow-hidden whitespace-nowrap border border-white/20 px-6 py-3 font-semibold text-[#0D1F4D] [background:var(--bg)] [border-radius:var(--radius)]',
         'transform-gpu transition-transform duration-200 ease-out active:translate-y-px hover:scale-[1.02]', className)}
       {...props}>
       <div className="-z-30 blur-[2px] absolute inset-0 overflow-visible [container-type:size]">

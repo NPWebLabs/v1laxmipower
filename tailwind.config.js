@@ -10,7 +10,6 @@ export default {
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         sans: ['"Hanken Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         deva: ['"Tiro Devanagari Marathi"', '"Noto Sans Devanagari"', 'serif'],
       },
       keyframes: {

@@ -1,5 +1,5 @@
 // HTML email templates. Inline styles + table layout so they render in Gmail, Outlook and phone mail apps.
-const BRAND = { ink: '#141A33', gold: '#F2A23A', goldText: '#8F5405', muted: '#545B78', line: '#E1E2E8', bg: '#F5F5F1' }
+const BRAND = { ink: '#0E1E4A', gold: '#F58220', goldText: '#B85300', muted: '#525C7A', line: '#E0E4EE', bg: '#F4F6FB' }
 
 export const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 

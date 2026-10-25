@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 import { cn } from '../../lib/utils'
-export function BorderBeam({ className, size = 120, delay = 0, duration = 8, colorFrom = '#F2A23A', colorTo = '#FFE2B0', borderWidth = 2, reverse = false }) {
+export function BorderBeam({ className, size = 120, delay = 0, duration = 8, colorFrom = '#F58220', colorTo = '#FFE2B0', borderWidth = 2, reverse = false }) {
   return (
     <div className="pointer-events-none absolute inset-0 rounded-[inherit] border-transparent [mask-clip:padding-box,border-box] [mask-composite:intersect] [mask-image:linear-gradient(transparent,transparent),linear-gradient(#000,#000)]"
       style={{ borderWidth, borderStyle: 'solid' }}>

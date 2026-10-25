@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { motion, useMotionTemplate, useMotionValue } from 'motion/react'
 import { cn } from '../../lib/utils'
-export function MagicCard({ children, className, gradientSize = 260, gradientColor = 'rgba(242,162,58,0.18)' }) {
+export function MagicCard({ children, className, gradientSize = 260, gradientColor = 'rgba(245,130,32,0.18)' }) {
   const x = useMotionValue(-gradientSize), y = useMotionValue(-gradientSize)
   const onMove = useCallback((e) => { const r = e.currentTarget.getBoundingClientRect(); x.set(e.clientX - r.left); y.set(e.clientY - r.top) }, [x, y])
   const onLeave = useCallback(() => { x.set(-gradientSize); y.set(-gradientSize) }, [x, y, gradientSize])

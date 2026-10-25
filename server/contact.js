@@ -4,8 +4,8 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { adminEmail, userEmail } from './templates.js'
+import { NEEDS } from '../src/needs.js'
 
-const NEEDS = ['Automotive battery', 'Inverter & inverter battery', 'Installation', 'Battery health check-up', 'Doorstep / after-sales service', 'Wholesale / dealer enquiry', 'Other']
 const LOG = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'enquiries.jsonl')
 
 // Basic per-IP limit: 5 submissions / 10 minutes.

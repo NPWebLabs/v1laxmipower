@@ -2,33 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Layout concept: ink "charged" bands (hero, partners, footer) alternate with calm paper sections;
-   one marigold accent carries every call to action, like the garlands at the store opening. */
+/* Palette: navy blue + orange + white. Navy bands (hero, footer) frame white/pale-blue sections;
+   orange carries every call to action. */
 :root {
-  --bg: 245 245 241;
-  --surface: 255 255 255;
-  --fg: 20 26 51;
-  --muted: 84 91 120;
-  --line: 225 226 232;
-  --ink: 20 26 51;
-  --ink-2: 31 38 80;
+  --bg: 255 255 255;
+  --surface: 244 246 251;
+  --fg: 14 27 64;
+  --muted: 82 92 122;
+  --line: 224 228 238;
+  --ink: 13 31 77;
+  --ink-2: 24 52 128;
   --on-ink: 255 255 255;
-  --on-ink-muted: 183 189 216;
-  --gold: 242 162 58;
-  --gold-text: 143 84 5;
+  --on-ink-muted: 196 205 230;
+  --gold: 245 130 32;
+  --gold-text: 184 83 0;
   --danger: 180 35 24;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: 12 16 36; --surface: 21 26 53; --fg: 236 238 248; --muted: 163 169 199; --line: 38 44 79;
-    --ink: 7 10 25; --ink-2: 20 26 58; --on-ink: 255 255 255; --on-ink-muted: 174 180 210;
-    --gold: 245 176 77; --gold-text: 245 176 77; --danger: 255 138 128; color-scheme: dark;
+    --bg: 9 16 38; --surface: 17 28 62; --fg: 236 239 248; --muted: 165 174 204; --line: 36 50 92;
+    --ink: 6 13 34; --ink-2: 20 40 100; --on-ink: 255 255 255; --on-ink-muted: 180 190 220;
+    --gold: 248 146 58; --gold-text: 250 160 80; --danger: 255 138 128; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: 12 16 36; --surface: 21 26 53; --fg: 236 238 248; --muted: 163 169 199; --line: 38 44 79;
-  --ink: 7 10 25; --ink-2: 20 26 58; --on-ink: 255 255 255; --on-ink-muted: 174 180 210;
-  --gold: 245 176 77; --gold-text: 245 176 77; --danger: 255 138 128; color-scheme: dark;
+  --bg: 9 16 38; --surface: 17 28 62; --fg: 236 239 248; --muted: 165 174 204; --line: 36 50 92;
+  --ink: 6 13 34; --ink-2: 20 40 100; --on-ink: 255 255 255; --on-ink-muted: 180 190 220;
+  --gold: 248 146 58; --gold-text: 250 160 80; --danger: 255 138 128; color-scheme: dark;
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
@@ -39,11 +39,12 @@ body {
   overflow-x: hidden;
 }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: rgb(var(--ink)); }
-h1, h2, h3, h4 { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; text-wrap: balance; letter-spacing: -0.02em; line-height: 1.05; }
+h1, h2, h3, h4 { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-weight: 600; text-wrap: balance; letter-spacing: -0.015em; line-height: 1.15; }
+b, strong { font-weight: 600; }
 p { text-wrap: pretty; }
 .gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 @media (min-width: 768px) { .gutter { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
-.eyebrow { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
 .tnum { font-variant-numeric: tabular-nums; }
 :focus-visible { outline: 3px solid rgb(var(--gold)); outline-offset: 3px; border-radius: 6px; }
 @media (prefers-reduced-motion: reduce) {
