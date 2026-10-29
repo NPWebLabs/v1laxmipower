@@ -4,7 +4,6 @@ import { ArrowRight, ArrowUpRight, Menu, X, Phone, Mail, Clock, MapPin, Quote, C
 import { Marquee } from './components/magicui/marquee'
 import { NumberTicker } from './components/magicui/number-ticker'
 import { BlurFade } from './components/magicui/blur-fade'
-import { BorderBeam } from './components/magicui/border-beam'
 import { ShimmerButton } from './components/magicui/shimmer-button'
 import { DotPattern } from './components/magicui/dot-pattern'
 import { cn } from './lib/utils'
@@ -84,24 +83,45 @@ function Nav({ route }) {
 }
 
 /* ---------- 1. Hero ---------- */
-const SHOWCASE = ['car', 'tractor', 'inverter-battery', 'commercial'].map((id) => D.PRODUCTS.find((p) => p.id === id))
+// Background: a 12 s seamless loop made with HyperFrames (source: ../laxmi-power-hero-video).
+// Muted + playsInline so phones autoplay it; visitors who prefer reduced motion get the still poster.
+function HeroVideo() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+    v.muted = true // React doesn't reliably reflect `muted`, and autoplay requires it
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const apply = () => { if (mq.matches) v.pause(); else v.play().catch(() => {}) }
+    apply()
+    mq.addEventListener?.('change', apply)
+    return () => mq.removeEventListener?.('change', apply)
+  }, [])
+  return (
+    <video ref={ref} className="absolute inset-0 h-full w-full object-cover" poster="video/hero-loop-poster.jpg"
+      muted loop playsInline preload="auto" aria-hidden="true" tabIndex={-1}>
+      <source src="video/hero-loop.webm" type="video/webm" />
+      <source src="video/hero-loop.mp4" type="video/mp4" />
+    </video>
+  )
+}
 
 function Hero() {
   const words = ['Your', 'Trusted', 'Partner', 'for', 'Complete', 'Power', 'Solutions.']
   return (
-    <section id="top" className="relative overflow-hidden bg-ink text-on-ink">
-      {/* navy → royal-blue sweep with an orange glow */}
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(90%_80%_at_85%_60%,rgb(var(--ink-2))_0%,transparent_70%)]" />
-      <DotPattern className="text-white/[0.06] [mask-image:radial-gradient(70%_60%_at_30%_40%,#000,transparent)]" />
-      <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-[radial-gradient(closest-side,rgba(245,130,32,0.25),transparent)]" />
-      <div className="gutter relative">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 pb-20 pt-12 lg:grid-cols-12 lg:gap-10 lg:pb-24 lg:pt-16">
-          <div className="min-w-0 lg:col-span-6">
+    <section id="top" className="relative flex min-h-[min(86vh,780px)] items-center overflow-hidden bg-ink text-on-ink">
+      <HeroVideo />
+      {/* Readability: a navy shade under the text (left) that clears toward the right, and a soft fade into the next section */}
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-[#081332]/90 via-[#081332]/55 to-[#081332]/10" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#081332]/70 to-transparent" />
+      <div className="gutter relative w-full">
+        <div className="mx-auto max-w-7xl pb-20 pt-14 lg:pb-24 lg:pt-20">
+          <div className="max-w-3xl">
             <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[13px] text-on-ink-muted">
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[13px] text-white/90 backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-gold shadow-[0_0_12px_#F58220]" />Welcome to Laxmi Power · Barshi · Since 2018
             </motion.p>
-            <h1 className="mt-6 text-[clamp(2rem,4.2vw,3.25rem)] font-semibold leading-[1.1]">
+            <h1 className="mt-6 text-[clamp(2.1rem,4.6vw,3.6rem)] font-semibold leading-[1.1] [text-shadow:0_2px_24px_rgba(6,16,43,0.55)]">
               {words.map((w, i) => (
                 <motion.span key={i} className={cn('mr-[0.22em] inline-block', (w === 'Power' || w === 'Solutions.') && 'text-gold')}
                   initial={{ y: '0.4em', opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 + i * 0.07, duration: 0.6, ease }}>
@@ -109,39 +129,18 @@ function Hero() {
                 </motion.span>
               ))}
             </h1>
-            <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6 }} className="mt-6 max-w-xl text-lg text-on-ink-muted">
+            <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6 }} className="mt-6 max-w-xl text-lg text-white/85">
               Car, tractor, two-wheeler, commercial and inverter batteries, inverters, installation and after-sales service, all under one roof in Barshi.
             </motion.p>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.75, duration: 0.6 }} className="mt-8 flex flex-wrap gap-3">
               <a href="#/products" className={btn.primary}>Explore Products <ArrowRight className="h-4 w-4" /></a>
               <a href={D.WA('Hello Laxmi Power, I would like to enquire about a battery / inverter.')} target="_blank" rel="noopener" className={btn.whatsapp}><WhatsAppIcon className="h-5 w-5" />WhatsApp Enquiry</a>
             </motion.div>
-            <motion.dl initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.95, duration: 0.6 }} className="mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-white/10 pt-6 sm:gap-6">
-              <div><dt className="eyebrow text-[10px] text-on-ink-muted">Established</dt><dd className="mt-1 whitespace-nowrap font-display text-xl font-semibold text-white sm:text-2xl"><NumberTicker value={2018} startValue={2000} grouping={false} /></dd></div>
-              <div><dt className="eyebrow text-[10px] text-on-ink-muted">We serve</dt><dd className="mt-1 whitespace-nowrap font-display text-xl font-semibold text-white sm:text-2xl">B2B<span className="text-gold">+</span>B2C</dd></div>
-              <div><dt className="eyebrow text-[10px] text-on-ink-muted">Open</dt><dd className="mt-1 whitespace-nowrap font-display text-xl font-semibold text-white sm:text-2xl">Mon–Sat</dd></div>
+            <motion.dl initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.95, duration: 0.6 }} className="mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-white/15 pt-6 sm:gap-6">
+              <div><dt className="eyebrow text-[10px] text-white/70">Established</dt><dd className="mt-1 whitespace-nowrap font-display text-xl font-semibold text-white sm:text-2xl"><NumberTicker value={2018} startValue={2000} grouping={false} /></dd></div>
+              <div><dt className="eyebrow text-[10px] text-white/70">We serve</dt><dd className="mt-1 whitespace-nowrap font-display text-xl font-semibold text-white sm:text-2xl">B2B<span className="text-gold">+</span>B2C</dd></div>
+              <div><dt className="eyebrow text-[10px] text-white/70">Open</dt><dd className="mt-1 whitespace-nowrap font-display text-xl font-semibold text-white sm:text-2xl">Mon–Sat</dd></div>
             </motion.dl>
-          </div>
-
-          {/* Product showcase: car, tractor, inverter and commercial batteries */}
-          <div className="relative lg:col-span-6">
-            <div aria-hidden className="absolute inset-x-[6%] bottom-[-26px] h-16 rounded-[50%] border-2 border-gold/50 bg-[radial-gradient(closest-side,rgba(245,130,32,0.35),transparent)] shadow-[0_0_60px_rgba(245,130,32,0.35)]" />
-            <ul className="relative grid grid-cols-2 gap-3 sm:gap-4">
-              {SHOWCASE.map((p, i) => (
-                <motion.li key={p.id} initial={{ opacity: 0, y: 24, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 0.3 + i * 0.1, duration: 0.7, ease }}
-                  className={cn(i % 2 === 1 && 'translate-y-5')}>
-                  <a href={`#/products/${p.id}`} className="group relative block aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 bg-ink-2 sm:aspect-[4/3]">
-                    <img src={p.img} alt={p.alt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#06102B]/90 via-[#06102B]/20 to-transparent" />
-                    <span className="absolute left-3 top-3 grid h-10 w-10 place-items-center rounded-xl bg-gold text-[#0D1F4D]"><Icon name={p.icon} className="h-5 w-5" /></span>
-                    <span className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-2 font-display text-base font-semibold text-white sm:text-lg">
-                      {p.short}<ArrowUpRight className="h-4 w-4 shrink-0 text-gold transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </span>
-                    {i === 0 && <BorderBeam size={160} duration={9} borderWidth={2} colorFrom="#F58220" colorTo="#FFC27A" />}
-                  </a>
-                </motion.li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>
