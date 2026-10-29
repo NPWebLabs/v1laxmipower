@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react'
-import { ArrowRight, ArrowUpRight, Menu, X, Phone, Mail, Clock, MapPin, Quote, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Menu, X, Phone, Mail, Clock, MapPin, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Marquee } from './components/magicui/marquee'
 import { NumberTicker } from './components/magicui/number-ticker'
 import { BlurFade } from './components/magicui/blur-fade'
@@ -352,8 +352,7 @@ function Testimonials() {
                   <p className="text-sm text-on-ink-muted">{t.place}</p>
                 </div>
               </figcaption>
-              <Quote className="mt-6 h-6 w-6 shrink-0 text-gold/70" aria-hidden />
-              <blockquote className="mt-3 flex-1 text-[16px] leading-relaxed text-white/90">{t.text}</blockquote>
+              <blockquote className="mt-5 flex-1 text-[16px] leading-relaxed text-white/90">{t.text}</blockquote>
             </figure>
           </li>
         ))}
