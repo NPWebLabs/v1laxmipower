@@ -119,7 +119,7 @@ function Hero() {
           <div className="max-w-3xl">
             <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[13px] text-white/90 backdrop-blur">
-              <span className="h-2 w-2 rounded-full bg-gold shadow-[0_0_12px_#F58220]" />Welcome to Laxmi Power · Barshi · Since 2018
+              <span className="h-2 w-2 rounded-full bg-gold shadow-[0_0_12px_#F58220]" />Welcome to Laxmi Power
             </motion.p>
             <h1 className="mt-6 text-[clamp(2.1rem,4.6vw,3.6rem)] font-semibold leading-[1.1] [text-shadow:0_2px_24px_rgba(6,16,43,0.55)]">
               {words.map((w, i) => (
