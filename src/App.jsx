@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react'
-import { ArrowRight, ArrowUpRight, Menu, X, Phone, Mail, Clock, MapPin, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Menu, X, Phone, Mail, Clock, MapPin, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
 import { Marquee } from './components/magicui/marquee'
 import { NumberTicker } from './components/magicui/number-ticker'
 import { BlurFade } from './components/magicui/blur-fade'
@@ -39,6 +39,53 @@ function useRoute() {
 }
 
 /* ---------- Nav ---------- */
+// Desktop menu item with a dropdown: opens on hover, keyboard focus or a click on the arrow; Esc / outside click closes.
+function NavDropdown({ item, active }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+  const hovering = useRef(false) // a mouse is over the item: the arrow then never toggles it shut
+  useEffect(() => {
+    if (!open) return
+    const onDown = (e) => { if (!ref.current?.contains(e.target)) setOpen(false) }
+    const onKey = (e) => { if (e.key === 'Escape') { setOpen(false); ref.current?.querySelector('a')?.focus() } }
+    document.addEventListener('mousedown', onDown); document.addEventListener('keydown', onKey)
+    return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey) }
+  }, [open])
+  const id = `menu-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+  return (
+    <li ref={ref} className="relative"
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse') { hovering.current = true; setOpen(true) } }}
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') { hovering.current = false; setOpen(false) } }}
+      onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false) }}>
+      <div className="flex items-center">
+        <a href={item.href} aria-current={active ? 'page' : undefined}
+          className={cn('rounded-l-full py-2 pl-3 pr-1 text-[15px] transition-colors hover:text-white', active ? 'text-gold' : 'text-on-ink-muted')}>{item.label}</a>
+        <button type="button" onClick={() => setOpen((v) => (hovering.current ? true : !v))} aria-expanded={open} aria-controls={id} aria-label={`${item.label} sections`}
+          className={cn('grid h-8 w-7 place-items-center rounded-r-full transition-colors hover:text-white', active ? 'text-gold' : 'text-on-ink-muted')}>
+          <ChevronDown className={cn('h-4 w-4 transition-transform duration-200', open && 'rotate-180')} aria-hidden />
+        </button>
+      </div>
+      <AnimatePresence>
+        {open && (
+          <motion.div id={id} initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4, transition: { duration: 0.12 } }} transition={{ duration: 0.18, ease }}
+            className="absolute left-0 top-full z-50 pt-2">
+            <ul className="min-w-[220px] overflow-hidden rounded-2xl border border-white/10 bg-ink-2 p-1.5 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.6)]">
+              {item.children.map((c) => (
+                <li key={c.href}>
+                  <a href={c.href} onClick={() => setOpen(false)}
+                    className="flex min-h-[44px] items-center justify-between gap-6 rounded-xl px-3.5 text-[15px] text-white/85 transition-colors hover:bg-white/10 hover:text-white focus-visible:bg-white/10">
+                    {c.label}<ArrowRight className="h-3.5 w-3.5 text-gold" aria-hidden />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </li>
+  )
+}
+
 function Nav({ route }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -50,7 +97,7 @@ function Nav({ route }) {
         <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4" aria-label="Main">
           <Logo dark />
           <ul className="hidden items-center gap-0.5 xl:flex">
-            {D.NAV.map((n) => (
+            {D.NAV.map((n) => n.children ? <NavDropdown key={n.href} item={n} active={active(n)} /> : (
               <li key={n.href}><a href={n.href} aria-current={active(n) ? 'page' : undefined}
                 className={cn('rounded-full px-3 py-2 text-[15px] transition-colors hover:bg-white/5 hover:text-white', active(n) ? 'text-gold' : 'text-on-ink-muted')}>{n.label}</a></li>
             ))}
@@ -71,6 +118,13 @@ function Nav({ route }) {
               {D.NAV.map((n, i) => (
                 <motion.li key={n.href} initial={{ x: -10, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.03 * i }}>
                   <a onClick={() => setOpen(false)} href={n.href} className="flex min-h-[48px] items-center justify-between border-b border-white/5 text-lg text-white">{n.label}<ArrowRight className="h-4 w-4 text-gold" /></a>
+                  {n.children && (
+                    <ul className="border-b border-white/5 py-1 pl-4">
+                      {n.children.map((c) => (
+                        <li key={c.href}><a onClick={() => setOpen(false)} href={c.href} className="flex min-h-[44px] items-center text-[16px] text-on-ink-muted hover:text-white">{c.label}</a></li>
+                      ))}
+                    </ul>
+                  )}
                 </motion.li>
               ))}
               <li className="pt-4"><ShimmerButton href={D.TEL} className="w-full"><Phone className="h-4 w-4" />Call {D.PHONE_DISPLAY}</ShimmerButton></li>
@@ -339,13 +393,11 @@ function Testimonials() {
       </div>
       <ul ref={row} className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-4 px-4 pb-2 md:-mx-8 md:scroll-px-8 md:px-8" aria-label="Testimonials">
         {D.TESTIMONIALS.map((t) => (
-          <li key={t.name} className="flex w-[85%] shrink-0 snap-start flex-col rounded-3xl border border-white/10 bg-white/[0.05] p-6 sm:w-[calc((100%-1.25rem)/2)] sm:p-7 lg:w-[calc((100%-2.5rem)/3)]">
+          <li key={t.name} className="flex w-[85%] shrink-0 snap-start flex-col rounded-3xl border border-white/10 bg-white/[0.05] p-6 sm:w-[calc((100%-1.25rem)/2)] sm:p-8">
             <figure className="flex h-full flex-col">
               <figcaption className="flex items-center gap-4">
-                <span className="h-[72px] w-[72px] shrink-0 overflow-hidden rounded-full border-2 border-gold/70 bg-ink-2">
-                  <img src={t.img} alt={`${t.name}, ${t.business}`} loading="lazy" className="h-full w-full object-cover"
-                    style={t.face && { objectPosition: `${t.face[0]}% ${t.face[1]}%`, transformOrigin: `${t.face[0]}% ${t.face[1]}%`, transform: `scale(${t.face[2]})` }} />
-                </span>
+                <img src={t.img} alt={`${t.name}, ${t.business}`} loading="lazy" width="96" height="96"
+                  className="h-20 w-20 shrink-0 rounded-full border-2 border-gold/70 bg-ink-2 object-cover sm:h-24 sm:w-24" />
                 <div className="min-w-0">
                   <p className="font-display text-lg font-semibold leading-snug text-white">{t.name}</p>
                   <p className="text-sm text-gold">{t.business}</p>

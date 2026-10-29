@@ -15,7 +15,12 @@ export { NEEDS } from './needs.js'
 // Site structure. `href` starting with '#/' is a page; plain '#id' is a section on the home page.
 export const NAV = [
   { href: '#top', label: 'Home' },
-  { href: '#/about', label: 'About Us' },
+  { href: '#/about', label: 'About Us', children: [
+    { href: '#/about/story', label: 'Our story' },
+    { href: '#/about/vision', label: 'Vision & mission' },
+    { href: '#/about/why', label: 'Why Laxmi Power' },
+    { href: '#/about/team', label: 'Our team' },
+  ] },
   { href: '#/products', label: 'Products' },
   { href: '#brands', label: 'Our Brands' },
   { href: '#services', label: 'Services' },
@@ -71,27 +76,27 @@ export const BRANDS = [
 ]
 
 // Testimonials from Laxmi Power's dealer and business partners (text as supplied by Laxmi Power).
-// face: [x%, y%, zoom] — where the face is in the photo, so the round avatar is centred on it.
+// img: head-and-shoulders crop for the round avatar · photo: the full original.
 export const TESTIMONIALS = [
-  { name: 'Santosh Ghongane', business: 'Guruprasad Battery', place: 'Barshi', img: 'img/testimonials/santosh-ghongane.jpg', face: [52, 24, 3.4],
+  { name: 'Santosh Ghongane', business: 'Guruprasad Battery', place: 'Barshi', img: 'img/testimonials/faces/santosh-ghongane.jpg', photo: 'img/testimonials/santosh-ghongane.jpg',
     text: 'Laxmi Power stands out for its customer-focused approach and commitment to reliable battery solutions. A dependable business partner for customers looking for quality products and service.' },
-  { name: 'Ganesh Ghongane', business: 'Ganesh Battery', place: 'Solapur', img: 'img/testimonials/ganesh-ghongane.jpg', face: [44, 28, 1.7],
+  { name: 'Ganesh Ghongane', business: 'Ganesh Battery', place: 'Solapur', img: 'img/testimonials/faces/ganesh-ghongane.jpg', photo: 'img/testimonials/ganesh-ghongane.jpg',
     text: 'A good battery solutions partner should understand customer requirements and recommend the right products. Laxmi Power aims to bring product knowledge, dependable support and customer satisfaction together.' },
-  { name: 'Mustaffa Shaikh', business: 'Vairag Auto Service', place: 'Vairag', img: 'img/testimonials/mustaffa-shaikh.jpg', face: [42, 45, 2.6],
+  { name: 'Mustaffa Shaikh', business: 'Vairag Auto Service', place: 'Vairag', img: 'img/testimonials/faces/mustaffa-shaikh.jpg', photo: 'img/testimonials/mustaffa-shaikh.jpg',
     text: 'Reliable battery solutions are important for keeping vehicles running smoothly. Laxmi Power’s focus on suitable products and service support reflects what customers value in a local power solutions provider.' },
-  { name: 'Kiran Dev', business: 'Swami Power', place: 'Pune', img: 'img/testimonials/kiran-dev.jpg', face: [47, 50, 4.5],
+  { name: 'Kiran Dev', business: 'Swami Power', place: 'Pune', img: 'img/testimonials/faces/kiran-dev.jpg', photo: 'img/testimonials/kiran-dev.jpg',
     text: 'For battery and inverter customers, product reliability and the right guidance matter. Laxmi Power’s focus on dependable power solutions and customer support is a valuable approach.' },
-  { name: 'Jiva Choudhari', business: 'Jay Ganesh Automobiles', place: 'Barshi', img: 'img/testimonials/jiva-choudhari.jpg', face: [47, 43, 1.5],
+  { name: 'Jiva Choudhari', business: 'Jay Ganesh Automobiles', place: 'Barshi', img: 'img/testimonials/faces/jiva-choudhari.jpg', photo: 'img/testimonials/jiva-choudhari.jpg',
     text: 'A customer-friendly battery business makes it easier to find suitable solutions for different vehicles. Laxmi Power’s emphasis on quality products and practical support is a positive step towards better customer service.' },
-  { name: 'Nana Bhandwalkar', business: 'Gajanan Battery', place: 'Bhoom, Dharashiv', img: 'img/testimonials/nana-bhandwalkar.jpg', face: [45, 30, 3],
+  { name: 'Nana Bhandwalkar', business: 'Gajanan Battery', place: 'Bhoom, Dharashiv', img: 'img/testimonials/faces/nana-bhandwalkar.jpg', photo: 'img/testimonials/nana-bhandwalkar.jpg',
     text: 'Customers need dependable battery options and clear guidance before making a purchase. Laxmi Power’s customer-first approach can help build confidence and long-term relationships.' },
-  { name: 'Sudharshan Sirsat', business: 'S.S. Battery', place: 'Dharashiv', img: 'img/testimonials/sudharshan-sirsat.jpg', face: [42, 64, 3],
+  { name: 'Sudharshan Sirsat', business: 'S.S. Battery', place: 'Dharashiv', img: 'img/testimonials/faces/sudharshan-sirsat.jpg', photo: 'img/testimonials/sudharshan-sirsat.jpg',
     text: 'Consistency in product quality and service is essential in the battery business. Laxmi Power’s commitment to reliable power solutions and customer support is the kind of approach that builds trust.' },
-  { name: 'Rajashree Dev', business: 'Laxmi Enterprise', place: 'Barshi', img: 'img/testimonials/rajashree-dev.jpg', face: [67, 20, 3.2],
+  { name: 'Rajashree Dev', business: 'Laxmi Enterprise', place: 'Barshi', img: 'img/testimonials/faces/rajashree-dev.jpg', photo: 'img/testimonials/rajashree-dev.jpg',
     text: 'A business grows when it focuses on customer needs, product quality and dependable service. Laxmi Power’s commitment to these principles supports a strong foundation for long-term growth.' },
-  { name: 'Sandeep Dain', business: 'Gajanan Battery', place: 'Paranda, Dharashiv', img: 'img/testimonials/sandeep-dain.jpg', face: [43, 40, 1.6],
+  { name: 'Sandeep Dain', business: 'Gajanan Battery', place: 'Paranda, Dharashiv', img: 'img/testimonials/faces/sandeep-dain.jpg', photo: 'img/testimonials/sandeep-dain.jpg',
     text: 'Battery customers value the right product for their vehicle and dependable assistance when they need it. Laxmi Power’s focus on accessible power solutions is well aligned with these needs.' },
-  { name: 'Javed Shaikh', business: 'J.S. Battery', place: 'Kurduwadi', img: 'img/testimonials/javed-shaikh.jpg', face: [43, 30, 1.6],
+  { name: 'Javed Shaikh', business: 'J.S. Battery', place: 'Kurduwadi', img: 'img/testimonials/faces/javed-shaikh.jpg', photo: 'img/testimonials/javed-shaikh.jpg',
     text: 'Finding suitable batteries and receiving clear product guidance can make the buying experience much easier. Laxmi Power’s emphasis on reliable products and helpful service is a strong customer-focused direction.' },
 ]
 
