@@ -80,6 +80,8 @@ export const BRANDS = [
 export const TESTIMONIALS = [
   { name: 'Santosh Ghongane', business: 'Guruprasad Battery', place: 'Barshi', img: 'img/testimonials/faces/santosh-ghongane.jpg', photo: 'img/testimonials/santosh-ghongane.jpg',
     text: 'Laxmi Power stands out for its customer-focused approach and commitment to reliable battery solutions. A dependable business partner for customers looking for quality products and service.' },
+  { name: 'Rajashree Dev', business: 'Laxmi Enterprise', place: 'Barshi', img: 'img/testimonials/faces/rajashree-dev.jpg', photo: 'img/testimonials/rajashree-dev.jpg',
+    text: 'A business grows when it focuses on customer needs, product quality and dependable service. Laxmi Power’s commitment to these principles supports a strong foundation for long-term growth.' },
   { name: 'Ganesh Ghongane', business: 'Ganesh Battery', place: 'Solapur', img: 'img/testimonials/faces/ganesh-ghongane.jpg', photo: 'img/testimonials/ganesh-ghongane.jpg',
     text: 'A good battery solutions partner should understand customer requirements and recommend the right products. Laxmi Power aims to bring product knowledge, dependable support and customer satisfaction together.' },
   { name: 'Mustaffa Shaikh', business: 'Vairag Auto Service', place: 'Vairag', img: 'img/testimonials/faces/mustaffa-shaikh.jpg', photo: 'img/testimonials/mustaffa-shaikh.jpg',
@@ -92,8 +94,6 @@ export const TESTIMONIALS = [
     text: 'Customers need dependable battery options and clear guidance before making a purchase. Laxmi Power’s customer-first approach can help build confidence and long-term relationships.' },
   { name: 'Sudharshan Sirsat', business: 'S.S. Battery', place: 'Dharashiv', img: 'img/testimonials/faces/sudharshan-sirsat.jpg', photo: 'img/testimonials/sudharshan-sirsat.jpg',
     text: 'Consistency in product quality and service is essential in the battery business. Laxmi Power’s commitment to reliable power solutions and customer support is the kind of approach that builds trust.' },
-  { name: 'Rajashree Dev', business: 'Laxmi Enterprise', place: 'Barshi', img: 'img/testimonials/faces/rajashree-dev.jpg', photo: 'img/testimonials/rajashree-dev.jpg',
-    text: 'A business grows when it focuses on customer needs, product quality and dependable service. Laxmi Power’s commitment to these principles supports a strong foundation for long-term growth.' },
   { name: 'Sandeep Dain', business: 'Gajanan Battery', place: 'Paranda, Dharashiv', img: 'img/testimonials/faces/sandeep-dain.jpg', photo: 'img/testimonials/sandeep-dain.jpg',
     text: 'Battery customers value the right product for their vehicle and dependable assistance when they need it. Laxmi Power’s focus on accessible power solutions is well aligned with these needs.' },
   { name: 'Javed Shaikh', business: 'J.S. Battery', place: 'Kurduwadi', img: 'img/testimonials/faces/javed-shaikh.jpg', photo: 'img/testimonials/javed-shaikh.jpg',

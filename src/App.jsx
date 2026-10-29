@@ -59,7 +59,7 @@ function NavDropdown({ item, active }) {
       onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false) }}>
       <div className="flex items-center">
         <a href={item.href} aria-current={active ? 'page' : undefined}
-          className={cn('rounded-l-full py-2 pl-3 pr-1 text-[15px] transition-colors hover:text-white', active ? 'text-gold' : 'text-on-ink-muted')}>{item.label}</a>
+          className={cn('whitespace-nowrap rounded-l-full py-2 pl-3 pr-1 text-[15px] transition-colors hover:text-white', active ? 'text-gold' : 'text-on-ink-muted')}>{item.label}</a>
         <button type="button" onClick={() => setOpen((v) => (hovering.current ? true : !v))} aria-expanded={open} aria-controls={id} aria-label={`${item.label} sections`}
           className={cn('grid h-8 w-7 place-items-center rounded-r-full transition-colors hover:text-white', active ? 'text-gold' : 'text-on-ink-muted')}>
           <ChevronDown className={cn('h-4 w-4 transition-transform duration-200', open && 'rotate-180')} aria-hidden />
@@ -73,7 +73,7 @@ function NavDropdown({ item, active }) {
               {item.children.map((c) => (
                 <li key={c.href}>
                   <a href={c.href} onClick={() => setOpen(false)}
-                    className="flex min-h-[44px] items-center justify-between gap-6 rounded-xl px-3.5 text-[15px] text-white/85 transition-colors hover:bg-white/10 hover:text-white focus-visible:bg-white/10">
+                    className="flex min-h-[44px] items-center justify-between gap-6 whitespace-nowrap rounded-xl px-3.5 text-[15px] text-white/85 transition-colors hover:bg-white/10 hover:text-white focus-visible:bg-white/10">
                     {c.label}<ArrowRight className="h-3.5 w-3.5 text-gold" aria-hidden />
                   </a>
                 </li>
@@ -99,11 +99,11 @@ function Nav({ route }) {
           <ul className="hidden items-center gap-0.5 xl:flex">
             {D.NAV.map((n) => n.children ? <NavDropdown key={n.href} item={n} active={active(n)} /> : (
               <li key={n.href}><a href={n.href} aria-current={active(n) ? 'page' : undefined}
-                className={cn('rounded-full px-3 py-2 text-[15px] transition-colors hover:bg-white/5 hover:text-white', active(n) ? 'text-gold' : 'text-on-ink-muted')}>{n.label}</a></li>
+                className={cn('whitespace-nowrap rounded-full px-3 py-2 text-[15px] transition-colors hover:bg-white/5 hover:text-white', active(n) ? 'text-gold' : 'text-on-ink-muted')}>{n.label}</a></li>
             ))}
           </ul>
           <div className="flex items-center gap-2">
-            <ShimmerButton href={D.TEL} aria-label={`Call ${D.PHONE_DISPLAY}`} className="hidden min-h-[44px] px-5 py-2 text-[15px] sm:inline-flex"><Phone className="h-4 w-4" />Call<span className="xl:hidden 2xl:inline">{D.PHONE_DISPLAY}</span></ShimmerButton>
+            <ShimmerButton href={D.TEL} aria-label={`Call ${D.PHONE_DISPLAY}`} className="hidden min-h-[44px] shrink-0 px-5 py-2 text-[15px] sm:inline-flex"><Phone className="h-4 w-4" />Call<span className="xl:hidden">{D.PHONE_DISPLAY}</span></ShimmerButton>
             <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white hover:bg-white/10 xl:hidden" aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? 'Close menu' : 'Open menu'}>
               {open ? <X /> : <Menu />}
             </button>
@@ -326,7 +326,7 @@ function Why() {
       {/* Team: photo, name and designation only — full stories live on the About page */}
       <div className="mt-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <SectionHead eyebrow="Meet our founder & team" title="A business built by women, for Barshi" />
+          <SectionHead eyebrow="Meet our founder & team" title="A business built by women" />
           <a href="#/about/team" className="inline-flex min-h-[44px] items-center gap-2 font-semibold text-gold-text hover:underline">Read our team's story <ArrowRight className="h-4 w-4" /></a>
         </div>
         <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

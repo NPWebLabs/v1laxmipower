@@ -132,7 +132,7 @@ function Team() {
   const [founder, ...team] = D.TEAM
   return (
     <Section id="about-team" className="scroll-mt-20">
-      <SectionHead eyebrow="Meet our founder & team" title="A business built by women, for Barshi" />
+      <SectionHead eyebrow="Meet our founder & team" title="A business built by women" />
       <BlurFade id={`about-${founder.id}`} className="mt-10 grid scroll-mt-24 overflow-hidden rounded-[28px] bg-ink text-on-ink lg:grid-cols-12">
         <div className="relative min-h-[380px] lg:col-span-5">
           <img loading="lazy" src={founder.img} alt={`${founder.name}, ${founder.role} of Laxmi Power`} className="absolute inset-0 h-full w-full object-cover object-top" />

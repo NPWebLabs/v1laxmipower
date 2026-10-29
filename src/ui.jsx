@@ -24,7 +24,7 @@ export function Mark({ className, petal = '#1E3A8A', base = '#0D1F4D', dark = fa
 
 export function Logo({ dark = false, className }) {
   return (
-    <a href="#top" className={cn('flex items-center gap-2.5', className)} aria-label="Laxmi Power home">
+    <a href="#top" className={cn('flex shrink-0 items-center gap-2.5 whitespace-nowrap', className)} aria-label="Laxmi Power home">
       <Mark dark={dark} className="h-10 w-10 shrink-0" />
       <span className="flex flex-col leading-none">
         <span className={cn('font-display text-[21px] tracking-tight', dark ? 'text-white' : 'text-fg')}><b className="font-semibold">Laxmi</b> <span className="font-normal">Power</span></span>
