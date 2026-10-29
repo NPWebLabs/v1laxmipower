@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react'
-import { ArrowRight, ArrowUpRight, Menu, X, Phone, Mail, Clock, MapPin, Star, Quote } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Menu, X, Phone, Mail, Clock, MapPin, Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Marquee } from './components/magicui/marquee'
 import { NumberTicker } from './components/magicui/number-ticker'
 import { BlurFade } from './components/magicui/blur-fade'
@@ -8,19 +8,22 @@ import { BorderBeam } from './components/magicui/border-beam'
 import { ShimmerButton } from './components/magicui/shimmer-button'
 import { DotPattern } from './components/magicui/dot-pattern'
 import { cn } from './lib/utils'
-import { ease, Logo, Icon, WhatsAppIcon, SectionHead, Section, btn } from './ui'
+import { ease, Logo, Icon, WhatsAppIcon, SectionHead, Section, NameRole, btn } from './ui'
 import { Contact, WhatsAppFloat, EnquiryModal, openEnquiry } from './contact'
 import ProductsPage from './pages/Products'
 import GalleryPage from './pages/Gallery'
+import AboutPage from './pages/About'
 import * as D from './data'
 
 /* ---------- Routing (hash based, so the single-file build works anywhere) ---------- */
-const routeOf = (h) => (h.startsWith('#/products') ? 'products' : h.startsWith('#/gallery') ? 'gallery' : 'home')
-const TITLES = { home: 'Laxmi Power – Batteries & Inverters in Barshi', products: 'Products – Laxmi Power, Barshi', gallery: 'Gallery – Laxmi Power, Barshi' }
+const PAGES = ['about', 'products', 'gallery']
+const routeOf = (h) => PAGES.find((p) => h.startsWith(`#/${p}`)) || 'home'
+const TITLES = { home: 'Laxmi Power – Batteries & Inverters in Barshi', about: 'About Us – Laxmi Power, Barshi', products: 'Products – Laxmi Power, Barshi', gallery: 'Gallery – Laxmi Power, Barshi' }
+// #/products/<id> → #cat-<id>, #/about/<id> → #about-<id>, #section → #section
 function scrollToHash() {
   const h = location.hash
-  const cat = h.match(/^#\/products\/(.+)/)
-  const el = cat ? document.getElementById(`cat-${cat[1]}`) : h.length > 1 && !h.startsWith('#/') ? document.getElementById(h.slice(1)) : null
+  const sub = h.match(/^#\/(products|about)\/(.+)/)
+  const el = sub ? document.getElementById(`${sub[1] === 'products' ? 'cat' : 'about'}-${sub[2]}`) : h.length > 1 && !h.startsWith('#/') ? document.getElementById(h.slice(1)) : null
   if (el) el.scrollIntoView({ block: 'start' })
   else if (h.startsWith('#/')) window.scrollTo(0, 0)
 }
@@ -54,7 +57,7 @@ function Nav({ route }) {
             ))}
           </ul>
           <div className="flex items-center gap-2">
-            <ShimmerButton href={D.TEL} className="hidden min-h-[44px] px-5 py-2 text-[15px] sm:inline-flex"><Phone className="h-4 w-4" />Call {D.PHONE_DISPLAY}</ShimmerButton>
+            <ShimmerButton href={D.TEL} aria-label={`Call ${D.PHONE_DISPLAY}`} className="hidden min-h-[44px] px-5 py-2 text-[15px] sm:inline-flex"><Phone className="h-4 w-4" />Call<span className="xl:hidden 2xl:inline">{D.PHONE_DISPLAY}</span></ShimmerButton>
             <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white hover:bg-white/10 xl:hidden" aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? 'Close menu' : 'Open menu'}>
               {open ? <X /> : <Menu />}
             </button>
@@ -241,25 +244,7 @@ function Services() {
   )
 }
 
-/* ---------- 5. Why Laxmi Power (reasons, founder, team, store) ---------- */
-const TEAM = [
-  { name: 'Madhubala Vidhate', role: 'Sales & Purchase Manager', img: 'img/madhubala.webp', since: 'With Laxmi Power for five years',
-    bio: 'A homemaker by background, Madhubala Vidhate has been associated with Laxmi Power for the past five years. With a strong desire to learn, work and become financially independent, she embraced the opportunity offered by Mrs. Sushma Sagar Agawane. Her journey reflects how the right opportunity can empower a homemaker to become confident, skilled and financially self-reliant.',
-    quote: 'Sushma Ma’am gave me the opportunity to work and earn independently. Today, Laxmi Power has given me financial stability, confidence, and a sense of independence. I am truly grateful for this opportunity and proud to be part of Laxmi Power.' },
-  { name: 'Dipali Ukirde', role: 'Accountant', img: 'img/dipali.webp', since: 'With Laxmi Power for two years',
-    bio: 'Dipali Ukirde has been working as an Accountant with Laxmi Power for the past two years. A Commerce graduate with accounting experience, she was given the opportunity by Mrs. Sushma Sagar Agawane to contribute her skills and build a stable source of income. Alongside managing her responsibilities as a homemaker, Dipali is also passionate about painting and preparing and selling homemade products such as papad and pickles. Her journey reflects her dedication to work, willingness to learn, and determination to make the most of her skills and opportunities.' },
-]
-
-// Name and designation share one size; the designation sits directly below the name.
-function NameRole({ name, role, onInk = false, className }) {
-  return (
-    <div className={cn('text-lg leading-snug sm:text-xl', className)}>
-      <h3 className={cn('font-semibold', onInk ? 'text-white' : 'text-fg')}>{name}</h3>
-      <p className={cn('font-display font-medium', onInk ? 'text-gold' : 'text-gold-text')}>{role}</p>
-    </div>
-  )
-}
-
+/* ---------- 5. Why Laxmi Power (reasons, team, store) ---------- */
 function Why() {
   return (
     <Section id="why" tone="surface">
@@ -285,41 +270,28 @@ function Why() {
         </ol>
       </div>
 
-      {/* Founder */}
+      {/* Team: photo, name and designation only — full stories live on the About page */}
       <div className="mt-20">
-        <SectionHead eyebrow="Meet our founder & team" title="A business built by women, for Barshi" />
-        <BlurFade className="mt-10 grid overflow-hidden rounded-[28px] bg-ink text-on-ink lg:grid-cols-12">
-          <div className="relative min-h-[380px] lg:col-span-5">
-            <img loading="lazy" src="img/founder.webp" alt="Mrs. Sushma Sagar Agawane, Founder and CEO of Laxmi Power" className="absolute inset-0 h-full w-full object-cover object-top" />
-          </div>
-          <div className="relative p-7 sm:p-10 lg:col-span-7">
-            <DotPattern className="text-white/[0.05]" />
-            <NameRole onInk name="Mrs. Sushma Sagar Agawane" role="Founder & CEO" className="relative sm:text-2xl" />
-            <div className="relative mt-6 space-y-4 text-on-ink-muted">
-              <p>Mrs. Sushma Sagar Agawane is a determined entrepreneur with nearly eight years of experience in the battery industry. A B.A. graduate, she began her entrepreneurial journey with an investment of just <span className="font-semibold text-white">₹10,000</span> and gradually built Laxmi Power into an established business through hard work, integrity and perseverance.</p>
-              <p>Beyond the battery industry, her passion for beauty and wellness led her to receive professional training from renowned beauty expert Mrs. Sandhya Tasgaonkar and establish her own beauty parlour. A cooking enthusiast and yoga practitioner, she believes in continuous learning, discipline and personal growth.</p>
-              <p>Under her leadership, Laxmi Power aims to become a trusted, technology-enabled provider of complete battery and power solutions while creating local employment opportunities and inspiring aspiring women entrepreneurs.</p>
-            </div>
-            <blockquote className="relative mt-7 border-l-2 border-gold pl-5">
-              <p className="font-display text-lg font-medium leading-relaxed text-white sm:text-xl">“Every successful journey begins with a small step, a strong belief and the determination to never give up.”</p>
-            </blockquote>
-          </div>
-        </BlurFade>
-
-        {/* Team */}
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
-          {TEAM.map((t, i) => (
-            <BlurFade key={t.name} delay={i * 0.08} className="flex flex-col overflow-hidden rounded-3xl border border-line bg-bg sm:flex-row">
-              <img loading="lazy" src={t.img} alt={`${t.name}, ${t.role} at Laxmi Power`} className="aspect-[4/5] w-full object-cover object-top sm:w-[40%]" />
-              <div className="flex min-w-0 flex-1 flex-col p-6 sm:p-7">
-                <NameRole name={t.name} role={t.role} />
-                <p className="mt-1 text-sm text-muted">{t.since}</p>
-                {t.quote && <p className="mt-4 font-display text-base font-medium leading-relaxed">“{t.quote}”</p>}
-                <p className="mt-4 text-[15px] text-muted">{t.bio}</p>
-              </div>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionHead eyebrow="Meet our founder & team" title="A business built by women, for Barshi" />
+          <a href="#/about/team" className="inline-flex min-h-[44px] items-center gap-2 font-semibold text-gold-text hover:underline">Read our team's story <ArrowRight className="h-4 w-4" /></a>
+        </div>
+        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {D.TEAM.map((t, i) => (
+            <BlurFade as="li" key={t.id} delay={i * 0.06}>
+              <a href={`#/about/${t.id}`} className="group block overflow-hidden rounded-3xl border border-line bg-bg transition-all hover:-translate-y-1 hover:border-gold hover:shadow-[0_18px_40px_-20px_rgba(13,31,77,0.35)]"
+                aria-label={`${t.name}, ${t.role} — read more on the About page`}>
+                <div className="aspect-[4/5] overflow-hidden bg-surface">
+                  <img loading="lazy" src={t.img} alt={`${t.name}, ${t.role} at Laxmi Power`} className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]" />
+                </div>
+                <div className="flex items-end justify-between gap-3 p-5">
+                  <NameRole name={t.name} role={t.role} />
+                  <ArrowUpRight className="mb-1 h-5 w-5 shrink-0 text-gold-text transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+                </div>
+              </a>
             </BlurFade>
           ))}
-        </div>
+        </ul>
       </div>
 
       {/* Store gallery */}
@@ -347,33 +319,49 @@ function Why() {
   )
 }
 
-/* ---------- 6. Testimonials ---------- */
+/* ---------- 6. Testimonials (swipeable row; arrows on larger screens) ---------- */
 function Testimonials() {
+  const row = useRef(null)
+  const scroll = (dir) => {
+    const el = row.current
+    const card = el?.querySelector('li')
+    if (card) el.scrollBy({ left: dir * (card.offsetWidth + 20), behavior: 'smooth' })
+  }
+  const arrow = 'grid h-11 w-11 place-items-center rounded-full border border-white/20 text-white transition-colors hover:border-gold hover:bg-gold hover:text-[#0D1F4D]'
   return (
     <Section id="testimonials" tone="ink" className="overflow-hidden">
       <DotPattern className="text-white/[0.05] [mask-image:radial-gradient(60%_70%_at_80%_40%,#000,transparent)]" />
       <div className="flex flex-wrap items-end justify-between gap-6">
-        <SectionHead onInk eyebrow="Customer testimonials" title="What our customers say" />
-        <a href={D.WA('Hello Laxmi Power, I would like to share feedback about your service: ')} target="_blank" rel="noopener" className="inline-flex min-h-[44px] items-center gap-2 font-semibold text-gold hover:underline">Share your experience <ArrowUpRight className="h-4 w-4" /></a>
+        <SectionHead onInk eyebrow="Testimonials" title="What our partners say" intro="Battery dealers, garages and businesses across Barshi, Solapur, Dharashiv and Pune." />
+        <div className="flex items-center gap-2">
+          <button onClick={() => scroll(-1)} className={arrow} aria-label="Previous testimonials"><ChevronLeft className="h-5 w-5" /></button>
+          <button onClick={() => scroll(1)} className={arrow} aria-label="Next testimonials"><ChevronRight className="h-5 w-5" /></button>
+        </div>
       </div>
-      <ul className="mt-12 grid gap-5 md:grid-cols-3">
-        {D.TESTIMONIALS.map((t, i) => (
-          <BlurFade as="li" key={i} delay={0.06 * i} className="relative flex flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur">
-            <div className="flex items-center justify-between">
-              <span className="flex gap-0.5 text-gold" aria-label={`${t.rating} out of 5 stars`}>
-                {Array.from({ length: 5 }, (_, s) => <Star key={s} className="h-4 w-4" fill={s < t.rating ? 'currentColor' : 'none'} aria-hidden />)}
-              </span>
-              {t.sample && <span className="rounded-full border border-white/20 px-2 py-0.5 text-[11px] uppercase tracking-wider text-on-ink-muted">Sample</span>}
-            </div>
-            <Quote className="mt-5 h-6 w-6 text-gold/70" aria-hidden />
-            <p className="mt-3 flex-1 text-[17px] leading-relaxed text-white/90">{t.text}</p>
-            <div className="mt-6 border-t border-white/10 pt-4">
-              <p className="font-semibold text-white">{t.name}</p>
-              <p className="text-sm text-on-ink-muted">{t.place} · {t.product}</p>
-            </div>
-          </BlurFade>
+      <ul ref={row} className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-4 px-4 pb-2 md:-mx-8 md:scroll-px-8 md:px-8" aria-label="Testimonials">
+        {D.TESTIMONIALS.map((t) => (
+          <li key={t.name} className="flex w-[85%] shrink-0 snap-start flex-col rounded-3xl border border-white/10 bg-white/[0.05] p-6 sm:w-[calc((100%-1.25rem)/2)] sm:p-7 lg:w-[calc((100%-2.5rem)/3)]">
+            <figure className="flex h-full flex-col">
+              <figcaption className="flex items-center gap-4">
+                <span className="h-[72px] w-[72px] shrink-0 overflow-hidden rounded-full border-2 border-gold/70 bg-ink-2">
+                  <img src={t.img} alt={`${t.name}, ${t.business}`} loading="lazy" className="h-full w-full object-cover"
+                    style={t.face && { objectPosition: `${t.face[0]}% ${t.face[1]}%`, transformOrigin: `${t.face[0]}% ${t.face[1]}%`, transform: `scale(${t.face[2]})` }} />
+                </span>
+                <div className="min-w-0">
+                  <p className="font-display text-lg font-semibold leading-snug text-white">{t.name}</p>
+                  <p className="text-sm text-gold">{t.business}</p>
+                  <p className="text-sm text-on-ink-muted">{t.place}</p>
+                </div>
+              </figcaption>
+              <Quote className="mt-6 h-6 w-6 shrink-0 text-gold/70" aria-hidden />
+              <blockquote className="mt-3 flex-1 text-[16px] leading-relaxed text-white/90">{t.text}</blockquote>
+            </figure>
+          </li>
         ))}
       </ul>
+      <div className="mt-8">
+        <a href={D.WA('Hello Laxmi Power, I would like to share feedback about your service: ')} target="_blank" rel="noopener" className="inline-flex min-h-[44px] items-center gap-2 font-semibold text-gold hover:underline">Share your experience <ArrowUpRight className="h-4 w-4" /></a>
+      </div>
     </Section>
   )
 }
@@ -435,7 +423,7 @@ export default function App() {
       <ScrollProgress />
       <Nav route={route} />
       <main id="main">
-        {route === 'products' ? <ProductsPage /> : route === 'gallery' ? <GalleryPage /> : (
+        {route === 'about' ? <AboutPage /> : route === 'products' ? <ProductsPage /> : route === 'gallery' ? <GalleryPage /> : (
           <>
             <Hero />
             <Categories />

@@ -15,6 +15,7 @@ export { NEEDS } from './needs.js'
 // Site structure. `href` starting with '#/' is a page; plain '#id' is a section on the home page.
 export const NAV = [
   { href: '#top', label: 'Home' },
+  { href: '#/about', label: 'About Us' },
   { href: '#/products', label: 'Products' },
   { href: '#brands', label: 'Our Brands' },
   { href: '#services', label: 'Services' },
@@ -69,14 +70,29 @@ export const BRANDS = [
   { name: 'Microtek', note: 'Inverters' },
 ]
 
-// SAMPLE testimonials — shown with a "Sample" badge. Replace with real customer reviews (and set sample: false).
+// Testimonials from Laxmi Power's dealer and business partners (text as supplied by Laxmi Power).
+// face: [x%, y%, zoom] — where the face is in the photo, so the round avatar is centred on it.
 export const TESTIMONIALS = [
-  { sample: true, name: 'Customer name', place: 'Barshi', product: 'Car battery', rating: 5,
-    text: 'They checked my old battery for free, told me honestly it needed replacing and fitted the new one the same day.' },
-  { sample: true, name: 'Customer name', place: 'Vairag', product: 'Inverter + battery', rating: 5,
-    text: 'The team helped us choose the right inverter for our shop and did a neat installation. Backup has been reliable.' },
-  { sample: true, name: 'Garage owner', place: 'Barshi', product: 'Dealer supply', rating: 5,
-    text: 'Regular supply, fair pricing and quick response on WhatsApp. Laxmi Power is our first call for batteries.' },
+  { name: 'Santosh Ghongane', business: 'Guruprasad Battery', place: 'Barshi', img: 'img/testimonials/santosh-ghongane.jpg', face: [52, 24, 3.4],
+    text: 'Laxmi Power stands out for its customer-focused approach and commitment to reliable battery solutions. A dependable business partner for customers looking for quality products and service.' },
+  { name: 'Ganesh Ghongane', business: 'Ganesh Battery', place: 'Solapur', img: 'img/testimonials/ganesh-ghongane.jpg', face: [44, 28, 1.7],
+    text: 'A good battery solutions partner should understand customer requirements and recommend the right products. Laxmi Power aims to bring product knowledge, dependable support and customer satisfaction together.' },
+  { name: 'Mustaffa Shaikh', business: 'Vairag Auto Service', place: 'Vairag', img: 'img/testimonials/mustaffa-shaikh.jpg', face: [42, 45, 2.6],
+    text: 'Reliable battery solutions are important for keeping vehicles running smoothly. Laxmi Power’s focus on suitable products and service support reflects what customers value in a local power solutions provider.' },
+  { name: 'Kiran Dev', business: 'Swami Power', place: 'Pune', img: 'img/testimonials/kiran-dev.jpg', face: [47, 50, 4.5],
+    text: 'For battery and inverter customers, product reliability and the right guidance matter. Laxmi Power’s focus on dependable power solutions and customer support is a valuable approach.' },
+  { name: 'Jiva Choudhari', business: 'Jay Ganesh Automobiles', place: 'Barshi', img: 'img/testimonials/jiva-choudhari.jpg', face: [47, 43, 1.5],
+    text: 'A customer-friendly battery business makes it easier to find suitable solutions for different vehicles. Laxmi Power’s emphasis on quality products and practical support is a positive step towards better customer service.' },
+  { name: 'Nana Bhandwalkar', business: 'Gajanan Battery', place: 'Bhoom, Dharashiv', img: 'img/testimonials/nana-bhandwalkar.jpg', face: [45, 30, 3],
+    text: 'Customers need dependable battery options and clear guidance before making a purchase. Laxmi Power’s customer-first approach can help build confidence and long-term relationships.' },
+  { name: 'Sudharshan Sirsat', business: 'S.S. Battery', place: 'Dharashiv', img: 'img/testimonials/sudharshan-sirsat.jpg', face: [42, 64, 3],
+    text: 'Consistency in product quality and service is essential in the battery business. Laxmi Power’s commitment to reliable power solutions and customer support is the kind of approach that builds trust.' },
+  { name: 'Rajashree Dev', business: 'Laxmi Enterprise', place: 'Barshi', img: 'img/testimonials/rajashree-dev.jpg', face: [67, 20, 3.2],
+    text: 'A business grows when it focuses on customer needs, product quality and dependable service. Laxmi Power’s commitment to these principles supports a strong foundation for long-term growth.' },
+  { name: 'Sandeep Dain', business: 'Gajanan Battery', place: 'Paranda, Dharashiv', img: 'img/testimonials/sandeep-dain.jpg', face: [43, 40, 1.6],
+    text: 'Battery customers value the right product for their vehicle and dependable assistance when they need it. Laxmi Power’s focus on accessible power solutions is well aligned with these needs.' },
+  { name: 'Javed Shaikh', business: 'J.S. Battery', place: 'Kurduwadi', img: 'img/testimonials/javed-shaikh.jpg', face: [43, 30, 1.6],
+    text: 'Finding suitable batteries and receiving clear product guidance can make the buying experience much easier. Laxmi Power’s emphasis on reliable products and helpful service is a strong customer-focused direction.' },
 ]
 
 export const SERVICES = [
@@ -119,7 +135,7 @@ export const GALLERY = [
 ]
 
 // Gallery page: every photo, grouped. Add new photos to public/img and list them here.
-export const PHOTO_GROUPS = ['Our store', 'Our team', 'Products & service', 'Customers we serve']
+export const PHOTO_GROUPS = ['Our store', 'Products & service', 'Customers we serve']
 export const PHOTOS = [
   { src: 'img/store-team.webp', group: 'Our store', alt: 'The Laxmi Power team with a new consignment of batteries' },
   { src: 'img/store-shelves.webp', group: 'Our store', alt: 'Shelves stocked with car and two-wheeler batteries' },
@@ -128,9 +144,6 @@ export const PHOTOS = [
   { src: 'img/store-tubular.webp', group: 'Our store', alt: 'Tall tubular inverter batteries in their boxes' },
   { src: 'img/store-stack.webp', group: 'Our store', alt: 'Stacked battery stock beside a steel rack' },
   { src: 'img/store-floor.webp', group: 'Our store', alt: 'New battery stock unpacked on the store floor' },
-  { src: 'img/founder.webp', group: 'Our team', alt: 'Mrs. Sushma Sagar Agawane, Founder & CEO' },
-  { src: 'img/madhubala.webp', group: 'Our team', alt: 'Madhubala Vidhate, Sales & Purchase Manager' },
-  { src: 'img/dipali.webp', group: 'Our team', alt: 'Dipali Ukirde, Accountant' },
   { src: 'img/doorstep.webp', group: 'Products & service', alt: 'Technicians replacing a car battery' },
   { src: 'img/install.webp', group: 'Products & service', alt: 'Technician wiring batteries to a wall-mounted inverter' },
   { src: 'img/health.webp', group: 'Products & service', alt: 'Technician testing a car battery with a multimeter' },
@@ -143,4 +156,41 @@ export const PHOTOS = [
   { src: 'img/agri.webp', group: 'Customers we serve', alt: 'Farmer standing in front of his tractor in a green field' },
   { src: 'img/garage.webp', group: 'Customers we serve', alt: 'Mechanic working on a car engine in his garage' },
   { src: 'img/institution.webp', group: 'Customers we serve', alt: 'Health centre building with palm trees' },
+]
+
+// About page + home team cards. `id` links a home card to the person's section: #/about/<id>
+export const TEAM = [
+  { id: 'sushma', name: 'Mrs. Sushma Sagar Agawane', role: 'Founder & CEO', img: 'img/founder.webp', since: 'Nearly eight years in the battery industry',
+    bio: [
+      'Mrs. Sushma Sagar Agawane is a determined entrepreneur with nearly eight years of experience in the battery industry. A B.A. graduate, she began her entrepreneurial journey with an investment of just ₹10,000 and gradually built Laxmi Power into an established business through hard work, integrity and perseverance.',
+      'Beyond the battery industry, her passion for beauty and wellness led her to receive professional training from renowned beauty expert Mrs. Sandhya Tasgaonkar and establish her own beauty parlour. A cooking enthusiast and yoga practitioner, she believes in continuous learning, discipline and personal growth.',
+      'Under her leadership, Laxmi Power aims to become a trusted, technology-enabled provider of complete battery and power solutions while creating local employment opportunities and inspiring aspiring women entrepreneurs.',
+    ],
+    quote: 'Every successful journey begins with a small step, a strong belief and the determination to never give up.' },
+  { id: 'madhubala', name: 'Madhubala Vidhate', role: 'Sales & Purchase Manager', img: 'img/madhubala.webp', since: 'With Laxmi Power for five years',
+    bio: ['A homemaker by background, Madhubala Vidhate has been associated with Laxmi Power for the past five years. With a strong desire to learn, work and become financially independent, she embraced the opportunity offered by Mrs. Sushma Sagar Agawane. Her journey reflects how the right opportunity can empower a homemaker to become confident, skilled and financially self-reliant.'],
+    quote: 'Sushma Ma’am gave me the opportunity to work and earn independently. Today, Laxmi Power has given me financial stability, confidence, and a sense of independence. I am truly grateful for this opportunity and proud to be part of Laxmi Power.' },
+  { id: 'dipali', name: 'Dipali Ukirde', role: 'Accountant', img: 'img/dipali.webp', since: 'With Laxmi Power for two years',
+    bio: ['Dipali Ukirde has been working as an Accountant with Laxmi Power for the past two years. A Commerce graduate with accounting experience, she was given the opportunity by Mrs. Sushma Sagar Agawane to contribute her skills and build a stable source of income. Alongside managing her responsibilities as a homemaker, Dipali is also passionate about painting and preparing and selling homemade products such as papad and pickles. Her journey reflects her dedication to work, willingness to learn, and determination to make the most of her skills and opportunities.'] },
+]
+
+export const VISION = 'To become a trusted and technology-enabled power-solutions provider in the region, delivering reliable batteries, inverters, installation and after-sales services through a strong local network, digital innovation and customer-centric solutions.'
+export const MISSION = 'To provide quality batteries and inverter solutions with dependable installation, maintenance and after-sales service, while leveraging digital ordering, doorstep support and battery health monitoring to deliver a seamless customer experience.'
+
+export const GOALS = [
+  'Develop an integrated battery, inverter, installation and service business.',
+  'Expand our dealer, distribution and service network.',
+  'Introduce digital ordering and service-request facilities.',
+  'Promote battery health checks and preventive maintenance.',
+  'Deliver timely and professional after-sales support.',
+  'Create local employment and skilled technical opportunities.',
+]
+
+export const VALUES = [
+  { icon: 'Handshake', k: 'Trust', v: 'Building long-term relationships through transparent business practices.' },
+  { icon: 'BadgeCheck', k: 'Quality', v: 'Providing reliable battery and inverter solutions.' },
+  { icon: 'UsersRound', k: 'Customer Focus', v: 'Understanding customer needs and recommending suitable products.' },
+  { icon: 'Truck', k: 'Convenience', v: 'Making product selection, installation and servicing easier.' },
+  { icon: 'Activity', k: 'Innovation', v: 'Exploring digital tools and battery health monitoring.' },
+  { icon: 'Sprout', k: 'Local Impact', v: 'Supporting local employment and skilled service opportunities.' },
 ]

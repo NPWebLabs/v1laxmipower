@@ -56,6 +56,16 @@ export function SectionHead({ eyebrow, title, intro, center = false, onInk = fal
   )
 }
 
+// Name and designation share one size; the designation sits directly below the name.
+export function NameRole({ name, role, onInk = false, as: H = 'h3', className }) {
+  return (
+    <div className={cn('text-lg leading-snug sm:text-xl', className)}>
+      <H className={cn('font-semibold', onInk ? 'text-white' : 'text-fg')}>{name}</H>
+      <p className={cn('font-display font-medium', onInk ? 'text-gold' : 'text-gold-text')}>{role}</p>
+    </div>
+  )
+}
+
 // Every section uses the same vertical rhythm and width.
 export function Section({ id, className, children, tone = 'bg', ...rest }) {
   const tones = { bg: 'bg-bg', surface: 'bg-surface border-y border-line', ink: 'bg-ink text-on-ink' }

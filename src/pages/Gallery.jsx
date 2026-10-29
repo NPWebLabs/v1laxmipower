@@ -61,7 +61,7 @@ export default function GalleryPage() {
 
   return (
     <>
-      <PageHeader crumb="Gallery" title="Photo" accent="Gallery" intro="A look inside our Barshi store, our team, our installation and service work, and the customers we power.">
+      <PageHeader crumb="Gallery" title="Photo" accent="Gallery" intro="A look inside our Barshi store, our installation and service work, and the customers we power.">
         <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filter photos">
           {['All', ...D.PHOTO_GROUPS].map((g) => {
             const n = g === 'All' ? D.PHOTOS.length : D.PHOTOS.filter((p) => p.group === g).length
