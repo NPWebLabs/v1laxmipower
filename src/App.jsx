@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react'
 import { ArrowRight, ArrowUpRight, Menu, X, Phone, Mail, Clock, MapPin, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react'
 import { Marquee } from './components/magicui/marquee'
@@ -10,6 +10,7 @@ import { cn } from './lib/utils'
 import { ease, Logo, Icon, WhatsAppIcon, SectionHead, Section, NameRole, btn } from './ui'
 import { Contact, WhatsAppFloat, EnquiryModal, openEnquiry } from './contact'
 import ProductsPage from './pages/Products'
+import { LanguageSwitcher, MenuLabel, currentLanguage } from './translate'
 import GalleryPage from './pages/Gallery'
 import AboutPage from './pages/About'
 import * as D from './data'
@@ -59,7 +60,7 @@ function NavDropdown({ item, active }) {
       onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false) }}>
       <div className="flex items-center">
         <a href={item.href} aria-current={active ? 'page' : undefined}
-          className={cn('whitespace-nowrap rounded-l-full py-2 pl-3 pr-1 text-[15px] transition-colors hover:text-white', active ? 'text-gold' : 'text-on-ink-muted')}>{item.label}</a>
+          className={cn('whitespace-nowrap rounded-l-full py-2 pl-2.5 pr-1 text-[15px] 2xl:pl-3 transition-colors hover:text-white', active ? 'text-gold' : 'text-on-ink-muted')}><MenuLabel>{item.label}</MenuLabel></a>
         <button type="button" onClick={() => setOpen((v) => (hovering.current ? true : !v))} aria-expanded={open} aria-controls={id} aria-label={`${item.label} sections`}
           className={cn('grid h-8 w-7 place-items-center rounded-r-full transition-colors hover:text-white', active ? 'text-gold' : 'text-on-ink-muted')}>
           <ChevronDown className={cn('h-4 w-4 transition-transform duration-200', open && 'rotate-180')} aria-hidden />
@@ -74,7 +75,7 @@ function NavDropdown({ item, active }) {
                 <li key={c.href}>
                   <a href={c.href} onClick={() => setOpen(false)}
                     className="flex min-h-[44px] items-center justify-between gap-6 whitespace-nowrap rounded-xl px-3.5 text-[15px] text-white/85 transition-colors hover:bg-white/10 hover:text-white focus-visible:bg-white/10">
-                    {c.label}<ArrowRight className="h-3.5 w-3.5 text-gold" aria-hidden />
+                    <MenuLabel>{c.label}</MenuLabel><ArrowRight className="h-3.5 w-3.5 text-gold" aria-hidden />
                   </a>
                 </li>
               ))}
@@ -99,11 +100,12 @@ function Nav({ route }) {
           <ul className="hidden items-center gap-0.5 xl:flex">
             {D.NAV.map((n) => n.children ? <NavDropdown key={n.href} item={n} active={active(n)} /> : (
               <li key={n.href}><a href={n.href} aria-current={active(n) ? 'page' : undefined}
-                className={cn('whitespace-nowrap rounded-full px-3 py-2 text-[15px] transition-colors hover:bg-white/5 hover:text-white', active(n) ? 'text-gold' : 'text-on-ink-muted')}>{n.label}</a></li>
+                className={cn('whitespace-nowrap rounded-full px-2.5 py-2 text-[15px] transition-colors hover:bg-white/5 hover:text-white 2xl:px-3', active(n) ? 'text-gold' : 'text-on-ink-muted')}><MenuLabel>{n.label}</MenuLabel></a></li>
             ))}
           </ul>
           <div className="flex items-center gap-2">
-            <ShimmerButton href={D.TEL} aria-label={`Call ${D.PHONE_DISPLAY}`} className="hidden min-h-[44px] shrink-0 px-5 py-2 text-[15px] sm:inline-flex"><Phone className="h-4 w-4" />Call<span className="xl:hidden">{D.PHONE_DISPLAY}</span></ShimmerButton>
+            <LanguageSwitcher id="lang-switch-header" />
+            <ShimmerButton href={D.TEL} aria-label={`Call ${D.PHONE_DISPLAY}`} className="hidden min-h-[44px] shrink-0 px-5 py-2 text-[15px] sm:inline-flex"><Phone className="h-4 w-4" />Call<span className="notranslate xl:hidden" translate="no">{D.PHONE_DISPLAY}</span></ShimmerButton>
             <button onClick={() => setOpen((v) => !v)} className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white hover:bg-white/10 xl:hidden" aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? 'Close menu' : 'Open menu'}>
               {open ? <X /> : <Menu />}
             </button>
@@ -117,17 +119,18 @@ function Nav({ route }) {
             <ul className="mx-auto flex max-w-7xl flex-col py-3">
               {D.NAV.map((n, i) => (
                 <motion.li key={n.href} initial={{ x: -10, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.03 * i }}>
-                  <a onClick={() => setOpen(false)} href={n.href} className="flex min-h-[48px] items-center justify-between border-b border-white/5 text-lg text-white">{n.label}<ArrowRight className="h-4 w-4 text-gold" /></a>
+                  <a onClick={() => setOpen(false)} href={n.href} className="flex min-h-[48px] items-center justify-between border-b border-white/5 text-lg text-white"><MenuLabel>{n.label}</MenuLabel><ArrowRight className="h-4 w-4 text-gold" /></a>
                   {n.children && (
                     <ul className="border-b border-white/5 py-1 pl-4">
                       {n.children.map((c) => (
-                        <li key={c.href}><a onClick={() => setOpen(false)} href={c.href} className="flex min-h-[44px] items-center text-[16px] text-on-ink-muted hover:text-white">{c.label}</a></li>
+                        <li key={c.href}><a onClick={() => setOpen(false)} href={c.href} className="flex min-h-[44px] items-center text-[16px] text-on-ink-muted hover:text-white"><MenuLabel>{c.label}</MenuLabel></a></li>
                       ))}
                     </ul>
                   )}
                 </motion.li>
               ))}
-              <li className="pt-4"><ShimmerButton href={D.TEL} className="w-full"><Phone className="h-4 w-4" />Call {D.PHONE_DISPLAY}</ShimmerButton></li>
+              <li className="pt-4"><LanguageSwitcher id="lang-switch-mobile" className="mb-3 w-full [&>select]:w-full" /></li>
+              <li><ShimmerButton href={D.TEL} className="w-full"><Phone className="h-4 w-4" />Call <span className="notranslate" translate="no">{D.PHONE_DISPLAY}</span></ShimmerButton></li>
             </ul>
           </motion.div>
         )}
@@ -162,6 +165,7 @@ function HeroVideo() {
 
 function Hero() {
   const words = ['Your', 'Trusted', 'Partner', 'for', 'Complete', 'Power', 'Solutions.']
+  const [translated] = useState(() => currentLanguage() !== 'en')
   return (
     <section id="top" className="relative flex min-h-[min(86vh,780px)] items-center overflow-hidden bg-ink text-on-ink">
       <HeroVideo />
@@ -176,11 +180,15 @@ function Hero() {
               <span className="h-2 w-2 rounded-full bg-gold shadow-[0_0_12px_#F58220]" />Welcome to Laxmi Power
             </motion.p>
             <h1 className="mt-6 text-[clamp(2.1rem,4.6vw,3.6rem)] font-semibold leading-[1.1] [text-shadow:0_2px_24px_rgba(6,16,43,0.55)]">
-              {words.map((w, i) => (
-                <motion.span key={i} className={cn('mr-[0.22em] inline-block', (w === 'Power' || w === 'Solutions.') && 'text-gold')}
-                  initial={{ y: '0.4em', opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 + i * 0.07, duration: 0.6, ease }}>
-                  {w}
-                </motion.span>
+              {translated ? (
+                <>Your Trusted Partner for Complete <span className="text-gold">Power Solutions.</span></>
+              ) : words.map((w, i) => (
+                <Fragment key={i}>
+                  <motion.span className={cn('inline-block', (w === 'Power' || w === 'Solutions.') && 'text-gold')}
+                    initial={{ y: '0.4em', opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 + i * 0.07, duration: 0.6, ease }}>
+                    {w}
+                  </motion.span>{i < words.length - 1 && ' '}
+                </Fragment>
               ))}
             </h1>
             <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6 }} className="mt-6 max-w-xl text-lg text-white/85">
@@ -242,7 +250,7 @@ function Brands() {
         <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3 lg:col-span-8">
           {D.BRANDS.map((b, i) => (
             <BlurFade as="li" key={b.name} delay={0.04 * i} className="flex min-h-[132px] flex-col items-center justify-center bg-bg p-6 text-center">
-              <span className="font-display text-xl font-semibold tracking-tight text-fg sm:text-2xl">{b.name}</span>
+              <span className="notranslate font-display text-xl font-semibold tracking-tight text-fg sm:text-2xl" translate="no">{b.name}</span>
               <span className="mt-1.5 text-sm text-muted">{b.note}</span>
             </BlurFade>
           ))}
@@ -430,7 +438,7 @@ function Footer() {
           <div className="md:col-span-2">
             <p className="eyebrow text-gold">Quick links</p>
             <ul className="mt-5 space-y-1">
-              {D.NAV.map((n) => <li key={n.href}><a href={n.href} className="inline-flex min-h-[36px] items-center text-on-ink-muted hover:text-white">{n.label}</a></li>)}
+              {D.NAV.map((n) => <li key={n.href}><a href={n.href} className="inline-flex min-h-[36px] items-center text-on-ink-muted hover:text-white"><MenuLabel>{n.label}</MenuLabel></a></li>)}
             </ul>
           </div>
           <div className="md:col-span-2">
@@ -443,9 +451,9 @@ function Footer() {
             <p className="eyebrow text-gold">Visit or call</p>
             <ul className="mt-5 space-y-3 text-on-ink-muted">
               <li><a href={D.MAPS} target="_blank" rel="noopener" className="flex gap-3 hover:text-white"><MapPin className="mt-1 h-4 w-4 shrink-0 text-gold" aria-hidden />{D.ADDRESS}</a></li>
-              <li><a href={D.TEL} className="flex gap-3 hover:text-white"><Phone className="mt-1 h-4 w-4 shrink-0 text-gold" aria-hidden />{D.PHONE_DISPLAY}</a></li>
-              <li><a href={D.WA()} target="_blank" rel="noopener" className="flex gap-3 hover:text-white"><WhatsAppIcon className="mt-1 h-4 w-4 shrink-0 text-gold" />WhatsApp {D.WHATSAPP_DISPLAY}</a></li>
-              <li><a href={D.MAILTO} className="flex gap-3 break-all hover:text-white"><Mail className="mt-1 h-4 w-4 shrink-0 text-gold" aria-hidden />{D.EMAIL}</a></li>
+              <li><a href={D.TEL} className="flex gap-3 hover:text-white"><Phone className="mt-1 h-4 w-4 shrink-0 text-gold" aria-hidden /><span className="notranslate" translate="no">{D.PHONE_DISPLAY}</span></a></li>
+              <li><a href={D.WA()} target="_blank" rel="noopener" className="flex gap-3 hover:text-white"><WhatsAppIcon className="mt-1 h-4 w-4 shrink-0 text-gold" />WhatsApp <span className="notranslate" translate="no">{D.WHATSAPP_DISPLAY}</span></a></li>
+              <li><a href={D.MAILTO} className="flex gap-3 break-all hover:text-white"><Mail className="mt-1 h-4 w-4 shrink-0 text-gold" aria-hidden /><span className="notranslate" translate="no">{D.EMAIL}</span></a></li>
               <li className="flex gap-3"><Clock className="mt-1 h-4 w-4 shrink-0 text-gold" aria-hidden />Mon–Sat, 10 am – 7 pm</li>
             </ul>
           </div>

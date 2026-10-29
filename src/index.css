@@ -55,3 +55,8 @@ p { text-wrap: pretty; }
 /* Horizontal scrollers (testimonials) keep swipe/scroll but hide the bar */
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Google Translate: we show our own EN / मराठी / हिंदी switcher, so hide Google's banner, toolbar and hover tooltips */
+.goog-te-banner-frame, .skiptranslate > iframe, #goog-gt-tt, .goog-te-balloon-frame, .goog-tooltip, .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf, .VIpgJd-yAWNEb-L7lbkb { display: none !important; }
+body { top: 0 !important; position: static !important; }
+.goog-text-highlight, font[style] { background: transparent !important; box-shadow: none !important; }

@@ -3,6 +3,7 @@ import { Handshake, BadgeCheck, UsersRound, Truck, Activity, Sprout, Car, Bike, 
 import { BlurFade } from './components/magicui/blur-fade'
 import { DotPattern } from './components/magicui/dot-pattern'
 import { cn } from './lib/utils'
+import { localize, hasOwnLabel } from './translate'
 
 export const ease = [0.22, 1, 0.36, 1]
 export const ORANGE = '#F58220'
@@ -24,7 +25,7 @@ export function Mark({ className, petal = '#1E3A8A', base = '#0D1F4D', dark = fa
 
 export function Logo({ dark = false, className }) {
   return (
-    <a href="#top" className={cn('flex shrink-0 items-center gap-2.5 whitespace-nowrap', className)} aria-label="Laxmi Power home">
+    <a href="#top" className={cn('notranslate flex shrink-0 items-center gap-2.5 whitespace-nowrap', className)} translate="no" aria-label="Laxmi Power home">
       <Mark dark={dark} className="h-10 w-10 shrink-0" />
       <span className="flex flex-col leading-none">
         <span className={cn('font-display text-[21px] tracking-tight', dark ? 'text-white' : 'text-fg')}><b className="font-semibold">Laxmi</b> <span className="font-normal">Power</span></span>
@@ -49,8 +50,8 @@ export function WhatsAppIcon({ className }) {
 export function SectionHead({ eyebrow, title, intro, center = false, onInk = false, className }) {
   return (
     <BlurFade className={cn('max-w-2xl', center && 'mx-auto text-center', className)}>
-      <p className={cn('eyebrow mb-3', onInk ? 'text-gold' : 'text-gold-text')}>{eyebrow}</p>
-      <h2 className={cn('text-[clamp(1.6rem,2.8vw,2.25rem)] font-semibold', onInk ? 'text-on-ink' : 'text-fg')}>{title}</h2>
+      <p className={cn('eyebrow mb-3', onInk ? 'text-gold' : 'text-gold-text')}>{localize(eyebrow)}</p>
+      <h2 className={cn('text-[clamp(1.6rem,2.8vw,2.25rem)] font-semibold', onInk ? 'text-on-ink' : 'text-fg')}>{localize(title)}</h2>
       {intro && <p className={cn('mt-4 text-lg', onInk ? 'text-on-ink-muted' : 'text-muted')}>{intro}</p>}
     </BlurFade>
   )
@@ -84,9 +85,9 @@ export function PageHeader({ crumb, title, accent, intro, children }) {
       <div aria-hidden className="pointer-events-none absolute -right-32 -top-40 h-[480px] w-[480px] rounded-full bg-[radial-gradient(closest-side,rgba(245,130,32,0.25),transparent)]" />
       <div className="relative mx-auto max-w-7xl pb-14 pt-10 md:pb-16 md:pt-14">
         <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-on-ink-muted">
-          <a href="#top" className="hover:text-white">Home</a><ChevronRight className="h-3.5 w-3.5" aria-hidden /><span className="text-white" aria-current="page">{crumb}</span>
+          <a href="#top" className="hover:text-white">{localize('Home')}</a><ChevronRight className="h-3.5 w-3.5" aria-hidden /><span className="text-white" aria-current="page">{crumb}</span>
         </nav>
-        <h1 className="mt-5 text-[clamp(1.9rem,3.6vw,2.75rem)] font-semibold">{title} <span className="text-gold">{accent}</span></h1>
+        <h1 className="mt-5 text-[clamp(1.9rem,3.6vw,2.75rem)] font-semibold">{hasOwnLabel(`${title} ${accent}`) ? localize(`${title} ${accent}`) : <>{title} <span className="text-gold">{accent}</span></>}</h1>
         <p className="mt-4 max-w-2xl text-lg text-on-ink-muted">{intro}</p>
         {children}
       </div>

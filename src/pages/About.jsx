@@ -6,6 +6,7 @@ import { BlurFade } from '../components/magicui/blur-fade'
 import { DotPattern } from '../components/magicui/dot-pattern'
 import { cn } from '../lib/utils'
 import { ease, Icon, SectionHead, Section, PageHeader, NameRole, chip } from '../ui'
+import { MenuLabel } from '../translate'
 import * as D from '../data'
 
 const PARTS = [
@@ -171,7 +172,7 @@ export default function AboutPage() {
     <>
       <PageHeader crumb="About Us" title="About" accent="Laxmi Power" intro="A women-led battery and inverter business in Barshi, serving homes, farms, garages and businesses since 2018.">
         <ul className="mt-8 flex flex-wrap gap-2" aria-label="Jump to a section">
-          {PARTS.map((p) => <li key={p.id}><button onClick={() => goToAbout(p.id)} className={chip(false)}>{p.label}</button></li>)}
+          {PARTS.map((p) => <li key={p.id}><button onClick={() => goToAbout(p.id)} className={chip(false)}><MenuLabel>{p.label}</MenuLabel></button></li>)}
         </ul>
       </PageHeader>
       <Story />

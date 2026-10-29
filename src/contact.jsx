@@ -21,7 +21,7 @@ function CopyRow({ icon: I, label, value, display, href, external = false }) {
       <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/5 text-gold"><I className="h-5 w-5" aria-hidden /></span>
       <div className="min-w-0 flex-1">
         <p className="eyebrow text-[10px] text-on-ink-muted">{label}</p>
-        <a data-v href={href} {...(external ? { target: '_blank', rel: 'noopener' } : {})} className="block select-all break-words text-lg font-semibold text-white hover:text-gold">{display || value}</a>
+        <a data-v href={href} {...(external ? { target: '_blank', rel: 'noopener' } : {})} translate={label === 'Location' ? undefined : 'no'} className={cn('block select-all break-words text-lg font-semibold text-white hover:text-gold', label !== 'Location' && 'notranslate')}>{display || value}</a>
       </div>
       <button onClick={copy} className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-on-ink-muted hover:bg-white/10 hover:text-white" aria-label={`Copy ${label}`}>
         {done ? <Check className="h-4 w-4 text-emerald-300" /> : <Copy className="h-4 w-4" />}
